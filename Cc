@@ -1,0 +1,556 @@
+-- สร้าง ScreenGui หลัก
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ShumShumHubGui"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = game.CoreGui
+
+-- ปุ่มไอคอนลอยสำหรับเปิด/ปิด Hub (ตั้งค่า ZIndex สูงสุด)
+local OpenIcon = Instance.new("TextButton")
+OpenIcon.Name = "OpenIcon"
+OpenIcon.Size = UDim2.new(0, 50, 0, 50)
+OpenIcon.Position = UDim2.new(0, 15, 0.5, -25)
+OpenIcon.BackgroundColor3 = Color3.fromRGB(24, 24, 28)
+OpenIcon.Text = "SHUM"
+OpenIcon.TextColor3 = Color3.fromRGB(114, 137, 218)
+OpenIcon.TextSize = 10
+OpenIcon.Font = Enum.Font.GothamBold
+OpenIcon.Active = true
+OpenIcon.Draggable = true
+OpenIcon.Visible = false -- ซ่อนไว้ตอนเริ่ม ให้เปิดหน้าต่างหลักขึ้นมาก่อน
+OpenIcon.ZIndex = 100
+OpenIcon.Parent = ScreenGui
+
+local IconStroke = Instance.new("UIStroke")
+IconStroke.Color = Color3.fromRGB(114, 137, 218)
+IconStroke.Thickness = 1.5
+IconStroke.Parent = OpenIcon
+
+local IconCorner = Instance.new("UICorner") 
+IconCorner.CornerRadius = UDim.new(0, 25) 
+IconCorner.Parent = OpenIcon
+
+-- หน้าต่างหลัก (Main Frame)
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 420, 0, 320)
+MainFrame.Position = UDim2.new(0.5, -210, 0.4, -160)
+MainFrame.BackgroundColor3 = Color3.fromRGB(24, 24, 28)
+MainFrame.BorderSizePixel = 0
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.ZIndex = 10
+MainFrame.Parent = ScreenGui
+
+-- เส้นขอบเรืองแสง
+local UIStroke = Instance.new("UIStroke")
+UIStroke.Color = Color3.fromRGB(114, 137, 218)
+UIStroke.Thickness = 1.5
+UIStroke.Parent = MainFrame
+
+-- มุมโค้งมน
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 6)
+UICorner.Parent = MainFrame
+
+-- แถบหัวข้อด้านบน (TopBar)
+local TopBar = Instance.new("Frame")
+TopBar.Size = UDim2.new(1, 0, 0, 35)
+TopBar.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
+TopBar.BorderSizePixel = 0
+TopBar.ZIndex = 11
+TopBar.Parent = MainFrame
+
+local TopBarCorner = Instance.new("UICorner")
+TopBarCorner.CornerRadius = UDim.new(0, 6)
+TopBarCorner.Parent = TopBar
+
+local FixCover = Instance.new("Frame")
+FixCover.Size = UDim2.new(1, 0, 0, 5)
+FixCover.Position = UDim2.new(0, 0, 1, -5)
+FixCover.BackgroundColor3 = Color3.fromRGB(18, 18, 22)
+FixCover.BorderSizePixel = 0
+FixCover.ZIndex = 11
+FixCover.Parent = TopBar
+
+-- ชื่อ Hub
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, -100, 1, 0)
+Title.Position = UDim2.new(0, 12, 0, 0)
+Title.BackgroundTransparency = 1
+Title.ZIndex = 12
+Title.Text = "SHUM SHUM HUB | Utility Panel"
+Title.TextColor3 = Color3.fromRGB(220, 220, 230)
+Title.TextSize = 13
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = TopBar
+
+-- ปุ่มย่อหน้าต่าง (ปุ่ม -)
+local MinimizeBtn = Instance.new("TextButton")
+MinimizeBtn.Size = UDim2.new(0, 26, 0, 26)
+MinimizeBtn.Position = UDim2.new(1, -62, 0, 4)
+MinimizeBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
+MinimizeBtn.ZIndex = 12
+MinimizeBtn.Text = "-"
+MinimizeBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+MinimizeBtn.TextSize = 14
+MinimizeBtn.Font = Enum.Font.GothamBold
+MinimizeBtn.Parent = TopBar
+local MinCorner = Instance.new("UICorner") MinCorner.CornerRadius = UDim.new(0, 4) MinCorner.Parent = MinimizeBtn
+
+-- ปุ่มปิดหน้าต่างถาวร (ปุ่ม X)
+local CloseBtn = Instance.new("TextButton")
+CloseBtn.Size = UDim2.new(0, 26, 0, 26)
+CloseBtn.Position = UDim2.new(1, -31, 0, 4)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(210, 50, 50)
+CloseBtn.ZIndex = 12
+CloseBtn.Text = "X"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextSize = 11
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.Parent = TopBar
+local CloseCorner = Instance.new("UICorner") CloseCorner.CornerRadius = UDim.new(0, 4) CloseCorner.Parent = CloseBtn
+
+-- เมนูด้านซ้าย (Sidebar)
+local Sidebar = Instance.new("Frame")
+Sidebar.Size = UDim2.new(0, 120, 1, -43)
+Sidebar.Position = UDim2.new(0, 8, 0, 40)
+Sidebar.BackgroundColor3 = Color3.fromRGB(20, 20, 24)
+Sidebar.BorderSizePixel = 0
+Sidebar.ZIndex = 11
+Sidebar.Parent = MainFrame
+
+local SidebarCorner = Instance.new("UICorner")
+SidebarCorner.CornerRadius = UDim.new(0, 4)
+SidebarCorner.Parent = Sidebar
+
+-- ปุ่มแท็บ Main
+local TabMainBtn = Instance.new("TextButton")
+TabMainBtn.Size = UDim2.new(1, -10, 0, 32)
+TabMainBtn.Position = UDim2.new(0, 5, 0, 8)
+TabMainBtn.BackgroundColor3 = Color3.fromRGB(114, 137, 218)
+TabMainBtn.ZIndex = 12
+TabMainBtn.Text = "Main / Utility"
+TabMainBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+TabMainBtn.TextSize = 12
+TabMainBtn.Font = Enum.Font.GothamBold
+TabMainBtn.Parent = Sidebar
+Instance.new("UICorner", TabMainBtn).CornerRadius = UDim.new(0, 4)
+
+-- ปุ่มแท็บ Forsaken
+local TabForsakenBtn = Instance.new("TextButton")
+TabForsakenBtn.Size = UDim2.new(1, -10, 0, 32)
+TabForsakenBtn.Position = UDim2.new(0, 5, 0, 46)
+TabForsakenBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
+TabForsakenBtn.ZIndex = 12
+TabForsakenBtn.Text = "Forsaken"
+TabForsakenBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+TabForsakenBtn.TextSize = 12
+TabForsakenBtn.Font = Enum.Font.GothamBold
+TabForsakenBtn.Parent = Sidebar
+Instance.new("UICorner", TabForsakenBtn).CornerRadius = UDim.new(0, 4)
+
+-- พื้นที่แสดงฟังก์ชันหน้า Main
+local MainContainer = Instance.new("ScrollingFrame")
+MainContainer.Size = UDim2.new(1, -138, 1, -43)
+MainContainer.Position = UDim2.new(0, 132, 0, 40)
+MainContainer.BackgroundTransparency = 1
+MainContainer.BorderSizePixel = 0
+MainContainer.ZIndex = 11
+MainContainer.CanvasSize = UDim2.new(0, 0, 0, 380)
+MainContainer.ScrollBarThickness = 4
+MainContainer.Visible = true
+MainContainer.Parent = MainFrame
+
+-- พื้นที่แสดงฟังก์ชันหน้า Forsaken
+local ForsakenContainer = Instance.new("ScrollingFrame")
+ForsakenContainer.Size = UDim2.new(1, -138, 1, -43)
+ForsakenContainer.Position = UDim2.new(0, 132, 0, 40)
+ForsakenContainer.BackgroundTransparency = 1
+ForsakenContainer.BorderSizePixel = 0
+ForsakenContainer.ZIndex = 11
+ForsakenContainer.CanvasSize = UDim2.new(0, 0, 0, 340)
+ForsakenContainer.ScrollBarThickness = 4
+ForsakenContainer.Visible = false
+ForsakenContainer.Parent = MainFrame
+
+-- ฟังก์ชันสร้างปุ่มในหน้า Main
+local function createMainButton(name, text, posY, color)
+    local btn = Instance.new("TextButton")
+    btn.Name = name
+    btn.Size = UDim2.new(1, -10, 0, 32)
+    btn.Position = UDim2.new(0, 0, 0, posY)
+    btn.BackgroundColor3 = color or Color3.fromRGB(35, 35, 42)
+    btn.ZIndex = 12
+    btn.Text = text
+    btn.TextColor3 = Color3.fromRGB(220, 220, 220)
+    btn.Font = Enum.Font.GothamBold
+    btn.TextSize = 12
+    btn.Parent = MainContainer
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 4)
+    return btn
+end
+
+local FlungToggle = createMainButton("FlungBtn", "เปิด/ปิด ชนคนกระเด็น", 8)
+local FlyButton = createMainButton("FlyBtn", "Fly: OFF", 48)
+
+local UpButton = Instance.new("TextButton")
+UpButton.Size = UDim2.new(0, 132, 0, 26)
+UpButton.Position = UDim2.new(0, 0, 0, 88)
+UpButton.BackgroundColor3 = Color3.fromRGB(45, 45, 54)
+UpButton.ZIndex = 12
+UpButton.Text = "UP (E)"
+UpButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+UpButton.TextSize = 11
+UpButton.Font = Enum.Font.GothamBold
+UpButton.Parent = MainContainer
+Instance.new("UICorner", UpButton).CornerRadius = UDim.new(0, 4)
+
+local DownButton = Instance.new("TextButton")
+DownButton.Size = UDim2.new(0, 132, 0, 26)
+DownButton.Position = UDim2.new(0, 138, 0, 88)
+DownButton.BackgroundColor3 = Color3.fromRGB(45, 45, 54)
+DownButton.ZIndex = 12
+DownButton.Text = "DOWN (Q)"
+DownButton.TextColor3 = Color3.fromRGB(200, 200, 200)
+DownButton.TextSize = 11
+DownButton.Font = Enum.Font.GothamBold
+DownButton.Parent = MainContainer
+Instance.new("UICorner", DownButton).CornerRadius = UDim.new(0, 4)
+
+local SpeedLabel = Instance.new("TextLabel")
+SpeedLabel.Size = UDim2.new(1, 0, 0, 20)
+SpeedLabel.Position = UDim2.new(0, 0, 0, 122)
+SpeedLabel.BackgroundTransparency = 1
+SpeedLabel.ZIndex = 12
+SpeedLabel.Text = "Fly Speed: 1"
+SpeedLabel.TextColor3 = Color3.fromRGB(180, 180, 180)
+SpeedLabel.TextSize = 11
+SpeedLabel.Font = Enum.Font.Gotham
+SpeedLabel.TextXAlignment = Enum.TextXAlignment.Left
+SpeedLabel.Parent = MainContainer
+
+local SliderBg = Instance.new("Frame")
+SliderBg.Size = UDim2.new(1, -10, 0, 6)
+SliderBg.Position = UDim2.new(0, 0, 0, 146)
+SliderBg.BackgroundColor3 = Color3.fromRGB(45, 45, 54)
+SliderBg.BorderSizePixel = 0
+SliderBg.ZIndex = 12
+SliderBg.Parent = MainContainer
+Instance.new("UICorner", SliderBg).CornerRadius = UDim.new(1, 0)
+
+local SliderBtn = Instance.new("TextButton")
+SliderBtn.Size = UDim2.new(0, 12, 0, 16)
+SliderBtn.Position = UDim2.new(0, -6, 0, -5)
+SliderBtn.BackgroundColor3 = Color3.fromRGB(114, 137, 218)
+SliderBtn.ZIndex = 13
+SliderBtn.Text = ""
+SliderBtn.Parent = SliderBg
+Instance.new("UICorner", SliderBtn).CornerRadius = UDim.new(1, 0)
+
+local GodToggle = createMainButton("GodBtn", "เปิด/ปิด อมตะ (God Mode)", 162)
+local InvisibilityToggle = createMainButton("InvisBtn", "เปิด/ปิด ล่องหน (Invisibility): OFF", 202)
+local GojoButton = createMainButton("GojoBtn", "GOJO", 242, Color3.fromRGB(40, 45, 75))
+
+local ForsakenScriptBtn = Instance.new("TextButton")
+ForsakenScriptBtn.Name = "ForsakenScriptBtn"
+ForsakenScriptBtn.Size = UDim2.new(1, -10, 0, 32)
+ForsakenScriptBtn.Position = UDim2.new(0, 0, 0, 8)
+ForsakenScriptBtn.BackgroundColor3 = Color3.fromRGB(75, 35, 85)
+ForsakenScriptBtn.ZIndex = 12
+ForsakenScriptBtn.Text = "Forsaken Script"
+ForsakenScriptBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ForsakenScriptBtn.Font = Enum.Font.GothamBold
+ForsakenScriptBtn.TextSize = 12
+ForsakenScriptBtn.Parent = ForsakenContainer
+Instance.new("UICorner", ForsakenScriptBtn).CornerRadius = UDim.new(0, 4)
+
+TabMainBtn.MouseButton1Click:Connect(function()
+    MainContainer.Visible = true
+    ForsakenContainer.Visible = false
+    TabMainBtn.BackgroundColor3 = Color3.fromRGB(114, 137, 218)
+    TabMainBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TabForsakenBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
+    TabForsakenBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+end)
+
+TabForsakenBtn.MouseButton1Click:Connect(function()
+    MainContainer.Visible = false
+    ForsakenContainer.Visible = true
+    TabForsakenBtn.BackgroundColor3 = Color3.fromRGB(114, 137, 218)
+    TabForsakenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    TabMainBtn.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
+    TabMainBtn.TextColor3 = Color3.fromRGB(200, 200, 200)
+end)
+
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local UserInputService = game:GetService("UserInputService")
+local player = Players.LocalPlayer
+
+local isFlying = false
+local flightSpeed = 1
+local moveUp = false
+local moveDown = false
+local attachment, linearVelocity, bodyGyro
+
+local function startFlight()
+	isFlying = true
+	FlyButton.Text = "Fly: ON"
+	FlyButton.BackgroundColor3 = Color3.fromRGB(114, 137, 218)
+
+	local char = player.Character
+	if not char then return end
+	local hrp = char:FindFirstChild("HumanoidRootPart")
+	local humanoid = char:FindFirstChildOfClass("Humanoid")
+	if not hrp or not humanoid then return end
+
+	humanoid.PlatformStand = true
+
+	attachment = Instance.new("Attachment")
+	attachment.Name = "FlightAttachment"
+	attachment.Parent = hrp
+
+	linearVelocity = Instance.new("LinearVelocity")
+	linearVelocity.Attachment0 = attachment
+	linearVelocity.MaxForce = math.huge
+	linearVelocity.VectorVelocity = Vector3.new(0, 0, 0)
+	linearVelocity.RelativeTo = Enum.ActuatorRelativeTo.World
+	linearVelocity.Parent = hrp
+
+	bodyGyro = Instance.new("BodyGyro")
+	bodyGyro.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+	bodyGyro.P = 25000
+	bodyGyro.Parent = hrp
+end
+
+local function stopFlight()
+	isFlying = false
+	FlyButton.Text = "Fly: OFF"
+	FlyButton.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
+	moveUp = false
+	moveDown = false
+
+	if linearVelocity then linearVelocity:Destroy() end
+	if bodyGyro then bodyGyro:Destroy() end
+	if attachment then attachment:Destroy() end
+
+	local char = player.Character
+	if char then
+		local humanoid = char:FindFirstChildOfClass("Humanoid")
+		if humanoid then humanoid.PlatformStand = false end
+	end
+end
+
+FlyButton.MouseButton1Click:Connect(function()
+	if isFlying then stopFlight() else startFlight() end
+end)
+
+UpButton.MouseButton1Down:Connect(function() moveUp = true end)
+UpButton.MouseButton1Up:Connect(function() moveUp = false end)
+DownButton.MouseButton1Down:Connect(function() moveDown = true end)
+DownButton.MouseButton1Up:Connect(function() moveDown = false end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.KeyCode == Enum.KeyCode.E then moveUp = true end
+	if input.KeyCode == Enum.KeyCode.Q then moveDown = true end
+end)
+
+UserInputService.InputEnded:Connect(function(input)
+	if input.KeyCode == Enum.KeyCode.E then moveUp = false end
+	if input.KeyCode == Enum.KeyCode.Q then moveDown = false end
+end)
+
+local isDraggingSlider = false
+SliderBtn.MouseButton1Down:Connect(function() isDraggingSlider = true end)
+UserInputService.InputEnded:Connect(function(input)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then isDraggingSlider = false end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+	if isDraggingSlider and input.UserInputType == Enum.UserInputType.MouseMovement then
+		local mousePos = UserInputService:GetMouseLocation().X
+		local sliderAbsolutePos = SliderBg.AbsolutePosition.X
+		local sliderAbsoluteSize = SliderBg.AbsoluteSize.X
+		local relativeX = math.clamp(mousePos - sliderAbsolutePos, 0, sliderAbsoluteSize)
+		local percentage = relativeX / sliderAbsoluteSize
+		SliderBtn.Position = UDim2.new(percentage, -6, 0, -5)
+		
+		flightSpeed = math.floor(percentage * 99 + 1)
+		SpeedLabel.Text = "Fly Speed: " .. flightSpeed
+	end
+end)
+
+RunService.RenderStepped:Connect(function()
+	local char = player.Character
+	if isFlying and char and char:FindFirstChild("HumanoidRootPart") then
+		local humanoid = char:FindFirstChildOfClass("Humanoid")
+		local camera = workspace.CurrentCamera
+		local moveDir = Vector3.new()
+
+		if humanoid then
+			local camCFrame = camera.CFrame
+			local rawMove = humanoid.MoveDirection
+			if rawMove.Magnitude > 0 then
+				moveDir = (camCFrame.RightVector * rawMove.X - camCFrame.LookVector * rawMove.Z)
+			end
+		end
+
+		local verticalDir = 0
+		if moveUp then verticalDir = verticalDir + 1 end
+		if moveDown then verticalDir = verticalDir - 1 end
+
+		local finalVelocity = (moveDir * (flightSpeed * 1.5)) + Vector3.new(0, verticalDir * (flightSpeed * 1.5), 0)
+
+		if linearVelocity and bodyGyro then
+			linearVelocity.VectorVelocity = finalVelocity
+			bodyGyro.CFrame = camera.CFrame
+		end
+	end
+end)
+
+local flungActive = false
+FlungToggle.MouseButton1Click:Connect(function()
+    flungActive = not flungActive
+    if flungActive then
+        FlungToggle.BackgroundColor3 = Color3.fromRGB(114, 137, 218)
+        task.spawn(function()
+            while flungActive do
+                task.wait(0.1)
+                pcall(function()
+                    local char = player.Character
+                    if char and char:FindFirstChild("HumanoidRootPart") then
+                        local myRoot = char.HumanoidRootPart
+                        for _, pObj in ipairs(Players:GetPlayers()) do
+                            if pObj ~= player and pObj.Character and pObj.Character:FindFirstChild("HumanoidRootPart") then
+                                local otherRoot = pObj.Character.HumanoidRootPart
+                                local distance = (myRoot.Position - otherRoot.Position).Magnitude
+                                if distance < 5 then
+                                    local bv = Instance.new("BodyVelocity")
+                                    bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+                                    bv.Velocity = (otherRoot.Position - myRoot.Position).Unit * 150 + Vector3.new(0, 50, 0)
+                                    bv.Parent = otherRoot
+                                    task.delay(0.2, function() if bv then bv:Destroy() end end)
+                                end
+                            end
+                        end
+                    end
+                end)
+            end
+        end)
+    else
+        FlungToggle.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
+    end
+end)
+
+local godMode = false
+local godConnection
+GodToggle.MouseButton1Click:Connect(function()
+    godMode = not godMode
+    if godMode then
+        GodToggle.BackgroundColor3 = Color3.fromRGB(114, 137, 218)
+        local char = player.Character
+        if char then
+            local hum = char:FindFirstChildOfClass("Humanoid")
+            if hum then
+                hum.Health = hum.MaxHealth
+                godConnection = hum.HealthChanged:Connect(function()
+                    if godMode and hum then hum.Health = hum.MaxHealth end
+                end)
+            end
+        end
+    else
+        GodToggle.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
+        if godConnection then godConnection:Disconnect(); godConnection = nil end
+    end
+end)
+
+local invisActive = false
+InvisibilityToggle.MouseButton1Click:Connect(function()
+    invisActive = not invisActive
+    pcall(function()
+        local char = player.Character
+        if not char then return end
+        
+        if invisActive then
+            InvisibilityToggle.BackgroundColor3 = Color3.fromRGB(114, 137, 218)
+            InvisibilityToggle.Text = "เปิด/ปิด ล่องหน (Invisibility): ON"
+            
+            for _, v in ipairs(char:GetDescendants()) do
+                if v:IsA("BasePart") and v.Name ~= "HumanoidRootPart" then
+                    v.Transparency = 1
+                elseif v:IsA("Decal") or v:IsA("Texture") then
+                    v.Transparency = 1
+                elseif v:IsA("Accessory") then
+                    local handle = v:FindFirstChild("Handle")
+                    if handle then handle.Transparency = 1 end
+                end
+            end
+        else
+            InvisibilityToggle.BackgroundColor3 = Color3.fromRGB(35, 35, 42)
+            InvisibilityToggle.Text = "เปิด/ปิด ล่องหน (Invisibility): OFF"
+            
+            for _, v in ipairs(char:GetDescendants()) do
+                if v:IsA("BasePart") and v.Name ~= "HumanoidRootPart" then
+                    v.Transparency = 0
+                elseif v:IsA("Decal") or v:IsA("Texture") then
+                    v.Transparency = 0
+                elseif v:IsA("Accessory") then
+                    local handle = v:FindFirstChild("Handle")
+                    if handle then handle.Transparency = 0 end
+                end
+            end
+        end
+    end)
+end)
+
+GojoButton.MouseButton1Click:Connect(function()
+    pcall(function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Gojo-Clientsided-Script-217637"))()
+    end)
+end)
+
+ForsakenScriptBtn.MouseButton1Click:Connect(function()
+    pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/zxcursedsocute/Forsaken-Script/refs/heads/main/lua"))()
+    end)
+end)
+
+player.CharacterAdded:Connect(function(char)
+    if isFlying then stopFlight() end
+    if invisActive then invisActive = false; InvisibilityToggle.BackgroundColor3 = Color3.fromRGB(35, 35, 42); InvisibilityToggle.Text = "เปิด/ปิด ล่องหน (Invisibility): OFF" end
+    local hum = char:WaitForChild("Humanoid")
+    if godMode then
+        if godConnection then godConnection:Disconnect() end
+        godConnection = hum.HealthChanged:Connect(function()
+            if godMode and hum then hum.Health = hum.MaxHealth end
+        end)
+    end
+end)
+
+local isMinimized = false
+MinimizeBtn.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+    MainContainer.Visible = not isMinimized and (TabMainBtn.BackgroundColor3 == Color3.fromRGB(114, 137, 218))
+    ForsakenContainer.Visible = not isMinimized and (TabForsakenBtn.BackgroundColor3 == Color3.fromRGB(114, 137, 218))
+    Sidebar.Visible = not isMinimized
+    if isMinimized then
+        MainFrame.Size = UDim2.new(0, 420, 0, 35)
+        MinimizeBtn.Text = "+"
+    else
+        MainFrame.Size = UDim2.new(0, 420, 0, 320)
+        MinimizeBtn.Text = "-"
+    end
+end)
+
+CloseBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
+    OpenIcon.Visible = true
+end)
+
+OpenIcon.MouseButton1Click:Connect(function()
+    MainFrame.Visible = true
+    OpenIcon.Visible = false
+end)
